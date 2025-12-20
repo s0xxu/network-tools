@@ -4,8 +4,8 @@ This has been working on a few different linux distros and I'm gonna work toward
 I spent about 3 weeks building this, and during this I think I got a better glimpse into memory management, and a short introduction into the kernel via the netlink API.
 It's a bit sloppy as I am still learning and relatively new. This is educational and for my learning purposes.
 
-My kernel was 6.14.0-36-generic, testing on ubuntu machine.
-compile with gcc port_scanner.c -o port_scanner -Iinclude
+I have added a makefile and I've structured the functions into different files, I've also tried adding portability for multiple linux kernels.
+One small issue I ran into is the interface detection with netlink breaking when running multiple virtual machines, I have tried adding a momentary solution for this, but I will probably adjust it and make it more robust in the future.
 
 USAGE:
 -ip 192.168.1.1 (ip you want to scan) 
