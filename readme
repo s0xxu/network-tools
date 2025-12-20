@@ -1,0 +1,40 @@
+This is a program I built that interacts with the kernel netlink API, I've left my original IOCTL work in there so it's available for viewing.
+I've separated the files to create a more structured program, and I'm planning to add more.
+This has been working on a few different linux distros and I'm gonna work towards making it more portable, mind you that the ae flag was removed on the ubuntu header, and res1 occupies 4 bits, instead of the 3 I've seen on some linux versions.
+I spent about 3 weeks building this, and during this I think I got a better glimpse into memory management, and a short introduction into the kernel via the netlink API.
+It's a bit sloppy as I am still learning and relatively new. This is educational and for my learning purposes.
+
+My kernel was 6.14.0-36-generic, testing on ubuntu machine.
+compile with gcc port_scanner.c -o port_scanner -Iinclude
+
+USAGE:
+-ip 192.168.1.1 (ip you want to scan) 
+
+-p 443-445 (or single port, just do -p 443)
+
+-arp, will send a ARP request out to the provided ip address to grab it's ethernet address and use this for crafting a packet from linklayer - tcp
+
+-plist
+the port list you want to scan with, have it formatted like
+
+443
+4444
+4448
+
+
+-flags
+the flags you want to set, example : -flags syn,rst,ack or -flags syn
+
+-spoofip
+if you want to build the ip header with a custom ip address that will be sent over the wire
+
+-spoofmac
+if you want to build the eth header with a custom mac address that will be sent over the wire
+
+examples:
+
+./port_scanner -ip 192.168.1.1 -p 443 -arp -flags syn
+./port_scanner -ip 8.8.8.8 -p 443-445 -flags syn,rst -spoofip 192.168.1.1
+./port_scanner -ip 192.168.1.10 -p 443 - flags syn, rst -arp -spoofmac ff:ff:ff:ff:ff:ff -spoofip 192.168.1.1
+
+
